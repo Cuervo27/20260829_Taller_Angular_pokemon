@@ -1,0 +1,2 @@
+# 20260829_Taller_Angular_pokemon
+20260829_Taller_Angular_pokemon
