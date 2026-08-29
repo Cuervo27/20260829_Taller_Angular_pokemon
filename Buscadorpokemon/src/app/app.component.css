@@ -1,0 +1,304 @@
+.page {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 2.5rem 1.25rem 4rem;
+}
+
+/* Header */
+.header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+}
+
+.brand h1 {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 800;
+  font-size: 2.5rem;
+  margin: 0;
+  color: var(--red);
+  letter-spacing: -0.02em;
+}
+
+.subtitle {
+  color: var(--muted);
+  margin: 0.5rem 0 0;
+  font-size: 0.95rem;
+}
+
+/* Pokeball icon */
+.pokeball {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background:
+    linear-gradient(var(--red) 0 50%, var(--card) 50% 100%);
+  border: 3px solid var(--ink);
+  position: relative;
+  flex-shrink: 0;
+}
+
+.pokeball::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--card);
+  border: 3px solid var(--ink);
+}
+
+.pokeball.spin {
+  animation: spin 0.9s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Search */
+.search {
+  display: flex;
+  gap: 0.6rem;
+  margin-bottom: 2rem;
+}
+
+.search-input {
+  flex: 1;
+  padding: 0.85rem 1rem;
+  border: 2px solid var(--line);
+  border-radius: 12px;
+  font-size: 1rem;
+  font-family: inherit;
+  background: var(--card);
+  color: var(--ink);
+  transition: border-color 0.15s ease;
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: var(--red);
+}
+
+.search-input::placeholder {
+  color: #a6a6ad;
+}
+
+.search-btn {
+  padding: 0.85rem 1.6rem;
+  border: none;
+  border-radius: 12px;
+  background: var(--red);
+  color: #fff;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.15s ease, transform 0.05s ease;
+}
+
+.search-btn:hover:not(:disabled) {
+  background: var(--red-dark);
+}
+
+.search-btn:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
+.search-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+/* States */
+.error {
+  background: #fdecea;
+  color: var(--red-dark);
+  border: 1px solid #f5c2bd;
+  padding: 0.85rem 1rem;
+  border-radius: 12px;
+  text-align: center;
+  font-weight: 500;
+}
+
+.loader,
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  padding: 3rem 1rem;
+  color: var(--muted);
+  text-align: center;
+}
+
+/* Card */
+.card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 12px 30px rgba(26, 26, 30, 0.08);
+}
+
+.card-media {
+  position: relative;
+  background:
+    radial-gradient(circle at center, rgba(246, 201, 69, 0.25), transparent 65%),
+    var(--red);
+  padding: 1.75rem;
+  display: flex;
+  justify-content: center;
+}
+
+.card-id {
+  position: absolute;
+  top: 1rem;
+  right: 1.25rem;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 800;
+  font-size: 1.1rem;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.card-img {
+  width: 200px;
+  height: 200px;
+  object-fit: contain;
+  filter: drop-shadow(0 8px 12px rgba(0, 0, 0, 0.25));
+}
+
+.card-body {
+  padding: 1.5rem 1.5rem 1.75rem;
+}
+
+.card-name {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 800;
+  font-size: 1.9rem;
+  margin: 0 0 0.75rem;
+  text-transform: capitalize;
+  letter-spacing: -0.02em;
+}
+
+/* Types */
+.types {
+  display: flex;
+  gap: 0.5rem;
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1.5rem;
+  flex-wrap: wrap;
+}
+
+.type {
+  text-transform: capitalize;
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 0.3rem 0.85rem;
+  border-radius: 999px;
+  color: #fff;
+  background: var(--muted);
+  letter-spacing: 0.02em;
+}
+
+.type--fire { background: #ee8130; }
+.type--water { background: #6390f0; }
+.type--grass { background: #7ac74c; }
+.type--electric { background: #d9a300; }
+.type--ice { background: #96d9d6; color: #1a1a1e; }
+.type--fighting { background: #c22e28; }
+.type--poison { background: #a33ea1; }
+.type--ground { background: #b8843c; }
+.type--flying { background: #a98ff3; }
+.type--psychic { background: #f95587; }
+.type--bug { background: #6f9c1b; }
+.type--rock { background: #b6a136; }
+.type--ghost { background: #735797; }
+.type--dragon { background: #6f35fc; }
+.type--dark { background: #4b4453; }
+.type--steel { background: #7a8a99; }
+.type--fairy { background: #d685ad; }
+.type--normal { background: #8a8a72; }
+
+/* Meta */
+.meta {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.meta-item {
+  flex: 1;
+  background: var(--base);
+  border-radius: 12px;
+  padding: 0.75rem 1rem;
+  text-align: center;
+}
+
+.meta-label {
+  display: block;
+  font-size: 0.75rem;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.2rem;
+}
+
+.meta-value {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+
+/* Stats */
+.stats {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.stat {
+  display: grid;
+  grid-template-columns: 70px 1fr 36px;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.stat-name {
+  font-size: 0.8rem;
+  color: var(--muted);
+  font-weight: 500;
+}
+
+.stat-bar {
+  height: 8px;
+  background: var(--base);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.stat-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--red), var(--gold));
+  border-radius: 999px;
+  transition: width 0.6s ease;
+}
+
+.stat-value {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 700;
+  font-size: 0.85rem;
+  text-align: right;
+}

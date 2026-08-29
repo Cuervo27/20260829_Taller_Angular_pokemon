@@ -1,0 +1,80 @@
+<main class="page">
+  <header class="header">
+    <div class="brand">
+      <span class="pokeball" aria-hidden="true"></span>
+      <h1>Pokédex</h1>
+    </div>
+    <p class="subtitle">Busca cualquier Pokémon por nombre o número y descubre su ficha.</p>
+  </header>
+
+  <form class="search" (submit)="onSubmit($event)" role="search">
+    <input
+      class="search-input"
+      type="text"
+      name="query"
+      [(ngModel)]="query"
+      placeholder="Ej: pikachu, charizard, 25..."
+      autocomplete="off"
+      aria-label="Nombre o número del Pokémon"
+    />
+    <button class="search-btn" type="submit" [disabled]="loading()">
+      <span *ngIf="!loading()">Buscar</span>
+      <span *ngIf="loading()">Buscando...</span>
+    </button>
+  </form>
+
+  <section class="result" aria-live="polite">
+    <p *ngIf="error()" class="error">{{ error() }}</p>
+
+    <div *ngIf="loading()" class="loader">
+      <span class="pokeball spin" aria-hidden="true"></span>
+      <span>Cargando Pokémon...</span>
+    </div>
+
+    <article *ngIf="pokemon() as p" class="card">
+      <div class="card-media">
+        <span class="card-id">{{ padId(p.id) }}</span>
+        <img
+          class="card-img"
+          [src]="p.image"
+          [alt]="'Imagen de ' + p.name"
+          loading="lazy"
+        />
+      </div>
+
+      <div class="card-body">
+        <h2 class="card-name">{{ p.name }}</h2>
+
+        <ul class="types">
+          <li *ngFor="let t of p.types" class="type type--{{ t }}">{{ t }}</li>
+        </ul>
+
+        <div class="meta">
+          <div class="meta-item">
+            <span class="meta-label">Altura</span>
+            <span class="meta-value">{{ formatMeters(p.height) }}</span>
+          </div>
+          <div class="meta-item">
+            <span class="meta-label">Peso</span>
+            <span class="meta-value">{{ formatKg(p.weight) }}</span>
+          </div>
+        </div>
+
+        <div class="stats">
+          <div *ngFor="let s of p.stats" class="stat">
+            <span class="stat-name">{{ statLabel(s.name) }}</span>
+            <div class="stat-bar">
+              <div class="stat-fill" [style.width.%]="(s.value / 255) * 100"></div>
+            </div>
+            <span class="stat-value">{{ s.value }}</span>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <div *ngIf="!pokemon() && !loading() && !error()" class="empty">
+      <span class="pokeball" aria-hidden="true"></span>
+      <p>Tu resultado aparecerá aquí. ¡Empieza a buscar!</p>
+    </div>
+  </section>
+</main>
