@@ -9,5 +9,5 @@ import { RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
   standalone: true
 })
 export class AppComponent {
-  titulo = 'pokemon-app';
+  titulo = 'Centro de control pokemon';
 }

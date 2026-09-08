@@ -5,5 +5,5 @@ import { BuscadorPokemonComponent} from './components/buscador-pokemon/buscador-
 export const routes: Routes = [
     { path: 'registro', component: RegistroUsuarioComponent },
     { path: 'buscador', component: BuscadorPokemonComponent },
-    { path: '', redirectTo: '/buscador', pathMatch: 'full' }
+    { path: '', redirectTo: '/registro', pathMatch: 'full' }
 ];
