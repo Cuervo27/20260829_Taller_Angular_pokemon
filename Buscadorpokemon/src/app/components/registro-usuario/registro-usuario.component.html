@@ -2,67 +2,82 @@
     <h1>Registro de usuario</h1>
     <p>Completa tus datos para registrarte.</p>
 </header>
-<section>
-    <article>
-        <h2>Datos personales</h2>
-        <div>
-            <form id="formulario_registro" (ngSubmit)="guardarUsuario()">
-                <div class="form-group">
-                    <label for="nombre">Nombre</label>
-                    <input type="text" id="nombre" [(ngModel)]="nombre" required placeholder="Tu nombre" autocomplete="given-name" autofocus
-                        [ngModel]="nombre()" (ngModelChange)="nombre.set($event)">
-                </div>
-                <div class="form-group">
-                    <label for="apellido">Apellido</label>
-                    <input type="text" id="apellido" [(ngModel)]="apellido" required placeholder="Tu apellido" autocomplete="family-name"
-                        [ngModel]="apellido()" (ngModelChange)="apellido.set($event)">
-                </div>
+    *HTML*
 
-                <div class="form-group">
-                    <label for="tipo_doc">Tipo de documento</label>
-                    <select id="tipo_doc" name="tipo_doc" required [ngModel]="tipo_doc()" (ngModelChange)="tipo_doc.set($event)">
-                        <option value="CC">Cédula de Ciudadanía</option>
-                        <option value="CE">Cédula de Extranjería</option>
-                        <option value="TI">Tarjeta de Identidad</option>
-                        <option value="PAS">Pasaporte</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="dni">Número de Documento (DNI)</label>
-                    <input type="text" id="dni" name="dni" required placeholder="Número de identificación" pattern="[0-9]{6,12}"
-                        title="Ingrese únicamente números (entre 6 y 12 dígitos)" [ngModel]="dni()" (ngModelChange)="dni.set($event)">
-                </div>
+<main class="form-container">
+    <div>
+		<header class="form-header">
+		  <h2>Registro de Usuario</h2>
+		  <p>Por favor completa los siguientes datos obligatorios</p>
+		</header>
+	</div>
+	<div>
+	 <form id='FormularioRegistro' (ngSubmit)="guardarUsuario()" >   
 
-                <div class="form-group">
-                    <label for="fecha_nacimiento">Fecha de nacimiento</label>
-                    <input type="date" id="fecha_nacimiento" name="fecha_nacimiento" required min="1920-01-01" max="2026-12-31"
-                        [ngModel]="fecha_nacimiento()" (ngModelChange)="fecha_nacimiento.set($event)">
-                </div>
-
-                <div class="form-group">
-                    <label for="correo">Correo electrónico</label>
-                    <input type="email" id="correo" name="correo" required placeholder="ejemplo@correo.com" autocomplete="email"
-                        [ngModel]="correo()" (ngModelChange)="correo.set($event)">
-                </div>
-
-                <div class="form-group consent-group">
-                    <label class="checkbox-container">
-                        <input type="checkbox" id="datos_personales" name="datos_personales" required
-                            [ngModel]="datos_personales()" (ngModelChange)="datos_personales.set($event)">
-                        <span>Acepto la política de <a href="#" class="link-policy">tratamiento de datos personales</a>.</span>
-                    </label>
-                </div>
-
-                <button type="button" class="btn-submit" (click)="guardarUsuario()">Enviar mensaje</button>
-            </form>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="nombre">Nombre</label>
+          <input type="text" id="nombre" [(ngModel)]="nombre" name="nombre" placeholder="Ej. Carlos" required>
         </div>
-        @if(ultimoUsuario); as user {
-            <div>
-                <h3>Usuario registrado: {{ user.nombre }} {{ user.apellido }}</h3>
-            </div>
-        }
-    </article>
-</section>
+
+        <div class="form-group">
+          <label for="apellido">Apellido</label>
+          <input type="text" id="apellido" [(ngModel)]="apellido" name="apellido" placeholder="Ej. Pérez" required>
+        </div>
+      </div>
+
+
+      <div class="form-row"> 
+				<div class="form-group">
+          <label for="tipo_doc">Tipo de documento</label>
+          <select id="tipo_doc" [(ngModel)]="tipo_doc" name="tipo_doc" required>
+            <option value="" disabled >Seleccione...</option>
+            <option value="CC" selected>Cédula de Ciudadanía</option>
+            <option value="CE">Cédula de Extranjería</option>
+            <option value="PAS" >Pasaporte</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="dni">Número de DNI</label>
+          <input type="text" id="dni" [(ngModel)]="dni" name="dni" placeholder="12345678" pattern="[0-9]{6,12}" title="Ingrese solo números" required>
+        </div>
+      </div>
+
+
+      <div class="form-group">
+        <label for="fecha_nacimiento">Fecha de nacimiento</label>
+        <input type="date" id="fecha_nacimiento" [(ngModel)]="fecha_nacimiento" name="fecha_nacimiento" required>
+      </div>
+
+
+      <div class="form-group">
+        <label for="correo">Correo electrónico</label>
+        <input type="email" id="correo" [(ngModel)]="correo" name="correo" placeholder="ejemplo@correo.com" required>
+      </div>
+
+
+      <div class="checkbox-group">
+        <input type="checkbox" id="datos_personales" [(ngModel)]="datos_personales" name="datos_personales" required>
+        <label for="datos_personales">
+          Acepto el tratamiento de mis datos personales de acuerdo con las <a href="#">políticas de privacidad</a>.
+        </label>
+      </div>
+
+      <button type="submit" class="btn-submit" >Enviar Registro</button>
+    </form>
+	</div>
+	
+	@if (ultimoUsuario(); as user) {
+    <div class="user-info">
+      <h3>Usuario Registrado</h3>
+      <p><strong>ID generado:</strong> {{ user.id }}</p>
+      <p><strong>Nombre Completo:</strong> {{ user.nombreCompleto }}</p>
+      <p><strong>Documento:</strong> {{ user.documento.tipo }} - {{ user.documento.numero }}</p>
+      <p><strong>Fecha de Nacimiento:</strong> {{ user.fechaNacimiento }}</p>
+      <p><strong>Correo:</strong> {{ user.correo }}</p>
+    </div>
+  }
+  </main>
 <footer>
     © 2026 · Formulario de contacto
 </footer>
