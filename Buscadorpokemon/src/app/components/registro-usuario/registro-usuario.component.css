@@ -1,177 +1,222 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: "Segoe UI", Arial, sans-serif;
+/* ==========================================
+   ESTILO NEÓN / CYBERPUNK (ANGULAR)
+   ========================================== */
+:host {
+  display: block;
+  max-width: 1000px;
+  margin: 2rem auto;
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  
+  /* PALETA NEÓN */
+  --bg-dark: #0a0a12;
+  --neon-cyan: #00f3ff;
+  --neon-magenta: #ff007f;
+  --neon-green: #00ff66;
+  --text-light: #e2e8f0;
+  --text-muted: #94a3b8;
+  --glass-bg: rgba(15, 15, 26, 0.85);
+  --radius: 12px;
 }
 
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+/* BASE EN NEGRO PROFUNDO */
 body {
-    background: #0f0f0f;
-    color: #e6e6e6;
-    padding-bottom: 80px;
+  background-color: var(--bg-dark);
 }
 
+/* HEADER GLOBAL Y TÍTULOS CON GLOW */
 header {
-    text-align: center;
-    padding: 40px 20px;
-    background: linear-gradient(135deg, #111, #1c1c1c);
-    border-bottom: 1px solid #222;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.7);
-    transition: box-shadow 1s ease;
-}
-
-header:hover {
-    box-shadow: 0 0 30px rgba(0, 100, 255, 0.6);
+  text-align: center;
+  margin-bottom: 1.5rem;
 }
 
 header h1 {
-    font-size: 2.4rem;
-    color: #9ecbff;
-    text-shadow: 0 0 10px rgba(158,203,255,0.6);
+  font-size: 2rem;
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  text-shadow: 0 0 10px var(--neon-cyan), 0 0 20px var(--neon-cyan);
 }
 
 header p {
-    margin-top: 10px;
-    color: #bcdcff;
+  color: var(--text-muted);
+  font-size: 0.9rem;
 }
 
-section {
-    max-width: 800px;
-    margin: 50px auto;
-    padding: 30px;
-    background: #151515;
-    border-radius: 12px;
-    box-shadow: 0 0 30px rgba(0, 0, 0, 0.6);
-    transition: box-shadow 1s ease;
+/* CONTENEDOR PRINCIPAL NEÓN */
+.form-container {
+  background: var(--glass-bg);
+  border: 1px solid var(--neon-cyan);
+  border-radius: var(--radius);
+  padding: 2.5rem;
+  box-shadow: 0 0 15px rgba(0, 243, 255, 0.2), inset 0 0 15px rgba(0, 243, 255, 0.1);
+  backdrop-filter: blur(10px);
 }
 
-section:hover {
-    box-shadow: 0 0 30px rgba(0, 100, 255, 0.6);
+.form-header {
+  border-bottom: 1px solid rgba(0, 243, 255, 0.3);
+  padding-bottom: 1rem;
+  margin-bottom: 1.5rem;
 }
 
-article {
-    background: #1b1b1b;
-    border-left: 4px solid #4eaaff;
-    padding: 25px;
-    border-radius: 8px;
+.form-header h2 {
+  color: var(--neon-cyan);
+  font-size: 1.4rem;
+  text-shadow: 0 0 8px rgba(0, 243, 255, 0.6);
 }
 
-article h2 {
-    color: #4eaaff;
-    margin-bottom: 20px;
-    text-shadow: 0 0 6px rgba(78,170,255,0.5);
+.form-header p {
+  color: var(--text-muted);
+  font-size: 0.85rem;
 }
 
-form {
-    display: flex;
-    flex-direction: column;
-    gap: 18px;
+/* ESTRUCTURA Y CAMPOS DE ENTRADA */
+.form-row {
+  display: flex;
+  gap: 1rem;
+}
+
+.form-row .form-group {
+  flex: 1;
 }
 
 .form-group {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1.25rem;
 }
 
 label {
-    font-weight: 600;
-    color: #9ecbff;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-light);
+  margin-bottom: 0.4rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
-input, textarea, select {
-    background: #111;
-    border: 1px solid #333;
-    padding: 10px 12px;
-    color: #e6e6e6;
-    border-radius: 6px;
-    font-size: 0.95rem;
-    width: 100%;
+input[type="text"],
+input[type="email"],
+input[type="date"],
+select {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  background-color: rgba(5, 5, 10, 0.8);
+  border: 1px solid rgba(0, 243, 255, 0.4);
+  border-radius: 6px;
+  color: #fff;
+  font-size: 0.95rem;
+  outline: none;
+  transition: all 0.3s ease;
 }
 
-input:focus, textarea:focus, select:focus {
-    outline: none;
-    border-color: #4eaaff;
-    box-shadow: 0 0 8px rgba(78,170,255,0.4);
+input:focus,
+select:focus {
+  border-color: var(--neon-cyan);
+  box-shadow: 0 0 12px var(--neon-cyan);
+  background-color: rgba(10, 10, 20, 0.95);
 }
 
-input[type="date"]::-webkit-calendar-picker-indicator {
-    filter: invert(0.8);
-    cursor: pointer;
+input::placeholder {
+  color: #475569;
 }
 
-textarea {
-    resize: vertical;
-    min-height: 120px;
+select option {
+  background-color: var(--bg-dark);
+  color: #fff;
 }
 
+/* CHECKBOX NEÓN */
 .checkbox-group {
-    display: flex;
-    gap: 15px;
-    flex-wrap: wrap;
-    margin-top: 4px;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  margin: 1.5rem 0;
+}
+
+.checkbox-group input[type="checkbox"] {
+  accent-color: var(--neon-magenta);
+  width: 1.1rem;
+  height: 1.1rem;
+  cursor: pointer;
 }
 
 .checkbox-group label {
-    font-weight: 400;
-    color: #d1d1d1;
-    cursor: pointer;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  text-transform: none;
 }
 
-.consent-group {
-    margin-top: 10px;
+.checkbox-group a {
+  color: var(--neon-magenta);
+  text-shadow: 0 0 5px rgba(255, 0, 127, 0.5);
+  text-decoration: none;
 }
 
-.checkbox-container {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    font-weight: 400;
-    color: #d1d1d1;
-    cursor: pointer;
+.checkbox-group a:hover {
+  text-decoration: underline;
 }
 
-.checkbox-container input[type="checkbox"] {
-    width: auto;
-    cursor: pointer;
+/* BOTÓN DE ENVÍO MAGENTA */
+.btn-submit {
+  width: 100%;
+  padding: 0.85rem;
+  background: transparent;
+  color: var(--neon-magenta);
+  border: 2px solid var(--neon-magenta);
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  cursor: pointer;
+  box-shadow: 0 0 10px rgba(255, 0, 127, 0.3);
+  transition: all 0.3s ease;
 }
 
-.link-policy {
-    color: #4eaaff;
-    text-decoration: underline;
+.btn-submit:hover {
+  background: var(--neon-magenta);
+  color: #fff;
+  box-shadow: 0 0 20px var(--neon-magenta), 0 0 30px var(--neon-magenta);
 }
 
-.link-policy:hover {
-    color: #9ecbff;
+/* REGISTRO DE USUARIO (@if) EN VERDE NEÓN */
+.user-info {
+  margin-top: 2rem;
+  padding: 1.25rem;
+  background: rgba(0, 255, 102, 0.05);
+  border: 1px solid var(--neon-green);
+  border-radius: 8px;
+  box-shadow: 0 0 12px rgba(0, 255, 102, 0.2);
 }
 
-button {
-    margin-top: 10px;
-    background: linear-gradient(135deg, #1e90ff, #005eff);
-    border: none;
-    padding: 12px;
-    color: white;
-    font-size: 1rem;
-    font-weight: 600;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: transform 0.2s ease, box-shadow 0.3s ease;
+.user-info h3 {
+  color: var(--neon-green);
+  text-shadow: 0 0 8px rgba(0, 255, 102, 0.6);
+  font-size: 1.1rem;
+  margin-bottom: 0.75rem;
 }
 
-button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 0 15px rgba(78,170,255,0.6);
+.user-info p {
+  color: var(--text-light);
+  font-size: 0.875rem;
+  margin-bottom: 0.3rem;
 }
 
 footer {
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    text-align: center;
-    padding: 15px 10px;
-    background: linear-gradient(135deg, #111, #1a1a1a);
-    border-top: 1px solid #222;
-    color: #bdbdbd;
-    font-size: 0.9rem;
-    box-shadow: 0 -4px 20px rgba(0,0,0,0.6);
+  text-align: center;
+  margin-top: 2.5rem;
+  color: var(--text-muted);
+  font-size: 0.8rem;
+}
+
+/* RESPONSIVE */
+@media (max-width: 600px) {
+  .form-row {
+    flex-direction: column;
+    gap: 0;
+  }
 }

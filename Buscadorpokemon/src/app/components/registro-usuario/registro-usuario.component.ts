@@ -36,7 +36,7 @@ export class RegistroUsuarioComponent {
 
     guardarUsuario() {
         if(!this.datos_personales()){
-          alert('Debes aceptar el tratamiento de datos personales');
+          console.error('Debes aceptar el tratamiento de datos personales');
           return;
         }
 
