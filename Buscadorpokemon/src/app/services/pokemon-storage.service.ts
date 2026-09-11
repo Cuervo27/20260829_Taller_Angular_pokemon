@@ -1,11 +1,11 @@
 import { Injectable, inject, signal } from '@angular/core';
-import {httpClient} from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 
 export interface PokemonData {
   id: number;
   name: string;
   image: string;
-  types: string;
+  type: string;
   baseExperience: number;
   esFavorito: boolean;
 }
@@ -13,54 +13,51 @@ export interface PokemonData {
   providedIn: 'root'
 })
 export class PokemonStorageService {
-  private http = inject(httpClient);
+  private http = inject(HttpClient);
   private readonly STORAGE_KEY = 'EquipoPokemonRegistrado';
-  misPokemons = signal<PokemonTarjeta[]>([]);
+  misPokemons = signal<PokemonData[]>([]);
 
   constructor() { 
-    this.CargarDesdeStorage();
+    this.cargarDesdeStorage();
   }
 
-  private CargarDesdeStorage() {
-    const Data = localStorage.getItem(this.STORAGE_KEY);
-    if(Data) {
-      this.misPokemons.set(JSON.parse(Data));
+  private cargarDesdeStorage() {
+    const data = localStorage.getItem(this.STORAGE_KEY);
+    if(data) {
+      this.misPokemons.set(JSON.parse(data));
     }
   }
-  private http = inject(httpClient);
-  private apiUrl = 'https://pokeapi.co/api/v2/pokemon/';
 
   //1. Obtener datos de la Api
-  buscarEnAPI(nombre0Id: string) {
-    return this.http<any>('https://pokeapi.co/api/v2/pokemon/${nombre0Id.toLowerCase}')
+  buscarEnAPI(nombreOId: string) {
+    return this.http.get<any>(`https://pokeapi.co/api/v2/pokemon/${nombreOId.toLowerCase()}`);
   }
 
   //Guardar Pokemon
-  guardarPokemon(nuevo: PokemonTarjeta) {
-    const actualizados = [...misPokemons(), nuevo];
+  guardarPokemon(nuevo: PokemonData) {
+    const actualizados = [...this.misPokemons(), nuevo];
     this.misPokemons.set(actualizados);
-    localStorage.setItem(this.STORAGE_KEY, JSON.stringify(actualizados))
+    localStorage.setItem(this.STORAGE_KEY, JSON.stringify(actualizados));
   }
 
 
   //3. Actualizar Pokemon Favorito
   actualizarFavorito(id: number) {
     const actualizados = this.misPokemons().map(
-      Poke => {
-        if(Poke.id === id) {
-          return {...Poke, esFavorito: !Poke.esFavorito}
+      pokemon => {
+        if(pokemon.id === id) {
+          return {...pokemon, esFavorito: !pokemon.esFavorito};
         }
-        return Poke;
+        return pokemon;
       });
-      this.misPokemons.set(actualizados)
-      localStorage.setItem(this.STORAGE_KEY, JSON.stringify(actualizados))
+      this.misPokemons.set(actualizados);
+      localStorage.setItem(this.STORAGE_KEY, JSON.stringify(actualizados));
   }
 
   //4. Eliminar Pokemon
-  eliminarPokemon(id: number){
-    const filtrados = this.misPokemons().filter(poke => poke.id !==id);
+  eliminarPokemon(id: number) {
+    const filtrados = this.misPokemons().filter(poke => poke.id !== id);
     this.misPokemons.set(filtrados);
     localStorage.setItem(this.STORAGE_KEY, JSON.stringify(filtrados));
   }
 }
-   ng 

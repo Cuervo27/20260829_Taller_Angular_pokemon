@@ -1,58 +1,66 @@
-import { Component, signal } from '@angular/core';
+import { Component, signal, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-
-interface PokemonData {
-  name: string;
-  image: string;
-  types: string;
-}
-
+import { NgClass, NgStyle } from '@angular/common';
+import { PokemonStorageService, PokemonData } from '../../services/pokemon-storage.service';
+import { ResaltarTarjetaDirective } from '../../directives/resaltar-tarjeta.directive';
 
 @Component({
-  imports: [FormsModule],
-  standalone: true,
   selector: 'app-buscador-pokemon',
-  styleUrl: './buscador-pokemon.component.css',
+  standalone: true,
+  imports: [FormsModule, NgClass, NgStyle, ResaltarTarjetaDirective],
   templateUrl: './buscador-pokemon.component.html',
+  styleUrl: './buscador-pokemon.component.css'
 })
 
-
 export class BuscadorPokemonComponent {
+
+  pokemonService = inject(PokemonStorageService)
+
   nombrePokemonInput = signal('');
   pokemon = signal<PokemonData | null>(null);
   mensajeError = signal<string | null>(null);
-  
-  onInputChange(event: Event) {
-    const input = event.target as HTMLInputElement;
-    this.nombrePokemonInput.set(input.value);
-  }
-  
-  async buscarPokemon() {
+  cargando = signal(false);
+
+  buscarPokemon() {
 
     const nombrePokemon = this.nombrePokemonInput().trim().toLowerCase();
-  	
-	  if(!nombrePokemon) return;
 
+    if(!nombrePokemon) return;
+
+    this.cargando.set(true);
     this.mensajeError.set(null);
 
-    try {
-       const respuesta = await fetch(`https://pokeapi.co/api/v2/pokemon/${nombrePokemon}`);
+    this.pokemonService.buscarEnAPI(nombrePokemon).subscribe({
+      next: (res: any) => {
+        this.pokemon.set({
+          id: res.id,
+          name: res.name.toUpperCase(),
+          image: res.sprites.front_default,
+          type: res.types[0].type.name,
+          baseExperience: res.base_experience,
+          esFavorito: false
+        });
+        this.cargando.set(false);
+      }, error: () => {
+        this.pokemon.set(null);
+        this.mensajeError.set('Ojito, Pokemon no encontrado pirobo');
+        this.cargando.set(false);
+      }
+    });
+    
+  }
 
-       if(!respuesta.ok){
-			  throw new Error('¡No se encontró el Pokemon!');
-		  }
-      
-      const datos = await respuesta.json();
+  onInputChange(event: any) {
+    this.nombrePokemonInput.set(event.target.value);
+  }
 
-      this.pokemon.set({
-        name: datos.name.toUpperCase(),
-        image: datos.sprites.front_default,
-        types: datos.types.map((typeInfo: any) => typeInfo.type.name).join(', ')
-      });
-    } catch (error: any) {
+  guardarEnEquipo() {
+    const poke = this.pokemon();
+    if(poke) {
+      this.pokemonService.guardarPokemon(poke);
+      alert(`${poke.name} agregado al almacenamiento exitosamente`);
       this.pokemon.set(null);
-      this.mensajeError.set(error.message);
+      this.nombrePokemonInput.set('');
     }
-
-}
+  }
 }

@@ -26,16 +26,16 @@ export interface Usuario {
 export class RegistroUsuarioComponent {
   nombre = signal('');
   apellido = signal('');
-  tipo_doc = signal('CC');
+  tipoDoc = signal('CC');
   dni = signal('');
-  fecha_nacimiento = signal('');
+  fechaNacimiento = signal('');
   correo = signal('');
-  datos_personales = signal(false);
+  datosPersonales = signal(false);
 
     ultimoUsuario = signal<Usuario | null>(null);
 
     guardarUsuario() {
-        if(!this.datos_personales()){
+        if(!this.datosPersonales()){
           console.error('Debes aceptar el tratamiento de datos personales');
           return;
         }
@@ -44,12 +44,12 @@ export class RegistroUsuarioComponent {
         id : Date.now(),
         nombreCompleto : `${this.nombre()} ${this.apellido()}`,
         documento : {
-          tipo: this.tipo_doc(),
+          tipo: this.tipoDoc(),
           numero: this.dni()
         },
-        fechaNacimiento : this.fecha_nacimiento(),
+        fechaNacimiento : this.fechaNacimiento(),
         correo : this.correo(),
-        datosPersonales : this.datos_personales(),  
+        datosPersonales : this.datosPersonales(),  
         fechaRegistro: new Date().toLocaleDateString()
     }
 
