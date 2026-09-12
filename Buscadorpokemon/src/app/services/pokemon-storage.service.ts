@@ -28,20 +28,16 @@ export class PokemonStorageService {
     }
   }
 
-  //1. Obtener datos de la Api
   buscarEnAPI(nombreOId: string) {
     return this.http.get<any>(`https://pokeapi.co/api/v2/pokemon/${nombreOId.toLowerCase()}`);
   }
 
-  //Guardar Pokemon
   guardarPokemon(nuevo: PokemonData) {
     const actualizados = [...this.misPokemons(), nuevo];
     this.misPokemons.set(actualizados);
     localStorage.setItem(this.STORAGE_KEY, JSON.stringify(actualizados));
   }
 
-
-  //3. Actualizar Pokemon Favorito
   actualizarFavorito(id: number) {
     const actualizados = this.misPokemons().map(
       pokemon => {
@@ -54,7 +50,6 @@ export class PokemonStorageService {
       localStorage.setItem(this.STORAGE_KEY, JSON.stringify(actualizados));
   }
 
-  //4. Eliminar Pokemon
   eliminarPokemon(id: number) {
     const filtrados = this.misPokemons().filter(poke => poke.id !== id);
     this.misPokemons.set(filtrados);
